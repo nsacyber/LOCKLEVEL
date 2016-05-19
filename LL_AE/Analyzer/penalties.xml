@@ -1,0 +1,350 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<penalties>
+  <!-- SMEP/SMAP -->
+  
+  <penalty id="HW_NO_SMEP" name="Hardware does not support SMEP" value="5">
+    <reason>Hardware does not support Supervisor Mode Execution Prevention</reason>
+    <remediation id="SMEP">Purchase systems that support Supervisor Mode Execution Prevention (Ivy Bridge chipset and successors) during the next acquisition cycle to harden the system against kernel exploits</remediation>
+  </penalty>
+  
+  <penalty id="OS_NO_SMEP" name="Operating system does not support SMEP" value="5">
+    <reason>Operating system does not support Supervisor Mode Execution Prevention</reason>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>
+  </penalty>
+
+  <penalty id="HW_NO_SMAP" name="Hardware does not support SMAP" value="5">
+    <reason>Hardware does not support Supervisor Mode Access Prevention</reason>
+    <remediation id="SMAP">Purchase systems that support Supervisor Mode Access Prevention (Broadwell chipset and successors) during the next acquisition cycle to harden the system against kernel exploits</remediation>
+  </penalty>
+  
+  <penalty id="OS_NO_SMAP" name="Operating system does not support SMAP" value="5">
+    <reason>Operating system does not support Supervisor Mode Access Prevention</reason>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>
+  </penalty>   
+
+  <!-- Secure Boot -->
+
+  <penalty id="OS_NO_SECURE_BOOT" name="Operating system does not support UEFI Secure Boot" value="5">
+    <reason>Operating system does not support UEFI Secure Boot</reason>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>    
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>
+  </penalty>
+
+  <penalty id="LEGACY_BIOS" name="System BIOS may not support UEFI Secure Boot" value="5">
+    <reason>System BIOS is is a Legacy BIOS, OR is a UEFI BIOS in Legacy/Compatibility Support Mode, and therefore prevents enabling UEFI Secure Boot</reason>
+    <remediation id="UEFI_BIOS">If the system has a UEFI BIOS, then change it from Legacy/Compatibility Support Mode to UEFI Mode (requires OS re-install) in BIOS Setup at boot. If the system does not have a UEFI BIOS, then purchase a system with UEFI BIOS during the next acquisition cycle and ensure it is in UEFI Mode before OS installation</remediation>
+  </penalty>
+
+  <penalty id="SECURE_BOOT_NOT_ENABLED" name="UEFI Secure Boot is not enabled" value="5">
+    <reason>System BIOS is a UEFI BIOS but UEFI Secure Boot is not enabled</reason>
+    <remediation id="ENABLE_SECURE_BOOT">Enable Secure Boot in BIOS Setup at boot or by using OEM supported tools</remediation>
+  </penalty>  
+  
+  <!-- Untrusted Font Blocking -->
+
+  <penalty id="OS_OUTDATED_FOR_FONT_BLOCKING" name="Operating system does not support untrusted font blocking" value="5">
+    <reason>Operating system does not support untrusted font blocking</reason>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>
+  </penalty>
+
+  <penalty id="FONT_BLOCKING_NOT_CONFIGURED" name="Untrusted font blocking not been configured on this system" value="5">
+    <reason>The MitigationOptions_FontBocking (yes, it is misspelled in Windows 10 RTM) registry value under HKLM\Software\Policies\Microsoft\Windows NT\MitigationOptions\ has not been configured so untrusted font blocking is disabled</reason>
+    <remediation id="SET_FONT_BLOCKING">In Group Policy go to Computer Configuration &gt; Administrative Templates &gt; System &gt; Mitigation Options and set Untrusted Font Blocking to Enabled. Then select 'Block untrusted fonts and log events' from the Mitigation Options drop down menu</remediation>
+  </penalty>
+
+  <penalty id="FONT_BLOCKING_IS_DISABLED" name="Untrusted font blocking is disabled for the OS via Group Policy" value="5">
+    <reason>The MitigationOptions_FontBocking (yes, it is misspelled in Windows 10 RTM) registry value under HKLM\Software\Policies\Microsoft\Windows NT\MitigationOptions\ is set to {0} ('{1}') instead of {2} ('{3}') so untrusted font blocking is disabled</reason>
+    <remediation id="SET_FONT_BLOCKING">In Group Policy go to Computer Configuration &gt; Administrative Templates &gt; System &gt; Mitigation Options and set Untrusted Font Blocking to Enabled. Then select 'Block untrusted fonts and log events' from the Mitigation Options drop down menu</remediation>
+  </penalty>
+  
+  <penalty id="FONT_BLOCKING_MO_IS_DISABLED" name="Untrusted font blocking is disabled for the OS via system MitigationOptions registry value" value="5">
+    <reason>The MitigationOptions registry value under HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\ is set to 0x{0:2X} instead of 0x{1:2X} and the Untrusted Font Blocking flag is set to {3} ('{3}') so untrusted font blocking is disabled</reason>
+    <remediation id="SET_FONT_BLOCKING">In Group Policy go to Computer Configuration &gt; Administrative Templates &gt; System &gt; Mitigation Options and set Untrusted Font Blocking to Enabled. Then select 'Block untrusted fonts and log events' from the Mitigation Options drop down menu</remediation>
+  </penalty>
+  
+ 
+  <!-- DEP -->
+  
+  <penalty id="OS_OUTDATED_FOR_DEP" name="Operating system does not support DEP" value="20">
+    <reason>Operating system does not support DEP</reason>
+    <remediation id="UPGRADE_TO_VISTA_SP2">Upgrade to Windows Vista SP2/Windows Server 2008 SP2 or later</remediation>
+    <remediation id="UPGRADE_TO_7_SP1">Upgrade to Windows 7 SP1/Windows Server 2008 R2 SP1 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+  
+  <penalty id="HW_OUTDATED_FOR_DEP" name="Processor does not support DEP" value="20">
+    <reason>Hardware does not support DEP</reason>
+    <remediation id="UPGRADE_TO_NEWER_PROCESSOR">Upgrade to a system with a newer processor that supports DEP</remediation>
+  </penalty>
+  
+  <!--This is a 32-bit system with DEP disabled.-->
+  <penalty id="DEP_DISABLED" name="DEP disabled on system" value="20">
+    <reason>DEP is disabled.</reason>
+    <remediation id="SET_BOOT_DEP_POLICY">Set boot DEP policy (in boot.ini or the BCD Store) to AlwaysOn. On Windows 8+, ensure this is not overridden by the system MitigationOptions registry value</remediation>
+    <remediation id="SET_MO_DEP">On Windows 8+, configure the MitigationOptions registry value to enforce DEP as AlwaysOn with the Policy Override bit</remediation>
+  </penalty>
+  
+  <!-- This is a 64-bit system with DEP disabled. On 64-bit systems, you can only disable DEP for 32-bit
+  applications. So this is not nearly as bad as the analogous one on 32-bit systems. -->
+  <penalty id="DEP_DISABLED32" name="DEP disabled on system for 32-bit applications" value="10">
+    <reason>DEP is disabled for 32-bit applications.</reason>
+    <remediation id="SET_BOOT_DEP_POLICY">Set boot DEP policy (in boot.ini or the BCD Store) to AlwaysOn. On Windows 8+, ensure this is not overridden by the system MitigationOptions registry value</remediation>
+	<remediation id="SET_MO_DEP">On Windows 8+, configure the MitigationOptions registry value to enforce DEP as AlwaysOn with the Policy Override bit</remediation>
+  </penalty>
+  
+  <!-- This is a 32-bit system, with DEP configured too low. -->
+  <penalty id="DEP_TOO_LOW" name="System DEP configuration too weak" value="10">
+    <reason>DEP policy too low.</reason>
+    <remediation id="SET_BOOT_DEP_POLICY">Set boot DEP policy (in boot.ini or the BCD Store) to AlwaysOn. On Windows 8+, ensure this is not overridden by the system MitigationOptions registry value</remediation>
+	<remediation id="SET_MO_DEP">On Windows 8+, configure the MitigationOptions registry value to enforce DEP as AlwaysOn with the Policy Override bit</remediation>
+  </penalty>
+  
+  <!-- This is a 64 bit system with DEP configured too low, but that only applies to 32-bit applications,
+  since DEP is always enabled for 64-bit apps. -->
+  <penalty id="DEP_TOO_LOW32" name="System DEP configuration too weak for 32-bit applications" value="5">
+    <reason>DEP policy too low for 32-bit applications.</reason>
+    <remediation id="SET_BOOT_DEP_POLICY">Set boot DEP policy (in boot.ini or the BCD Store) to AlwaysOn. On Windows 8+, ensure this is not overridden by the system MitigationOptions registry value</remediation>
+	<remediation id="SET_MO_DEP">On Windows 8+, configure the MitigationOptions registry value to enforce DEP as AlwaysOn with the Policy Override bit</remediation>
+  </penalty>
+  
+  <penalty id="DEP_OVERRIDDEN_FOR_APP" name="DEP disabled for app via MitigationOptions" value="2">
+    <reason>DEP is disabled for {0}</reason>
+    <remediation id="MO_ENABLE_DEP_ON_APP">Delete or configure the MitigationsOptions registry value for the application under the Image File Execution Options key to enable DEP</remediation>
+  </penalty>
+  
+  <penalty id="APP_NOT_OPTED_IN_FOR_DEP" name="App not opted in for DEP" value="2">
+    <reason>App {0} is not opted in for DEP</reason>
+    <remediation id="SET_BOOT_DEP_POLICY">Set boot DEP policy (in boot.ini or the BCD Store) to AlwaysOn. On Windows 8+, ensure this is not overridden by the system MitigationOptions registry value</remediation>
+	<remediation id="SET_MO_DEP">On Windows 8+, configure the MitigationOptions registry value to enforce DEP as AlwaysOn with the Policy Override bit</remediation>
+	<remediation id="MO_ENABLE_DEP_ON_APP2">On Windows 8+, configure the MitigationsOptions registry value for the application under the Image File Execution Options key to enable DEP</remediation>
+	<remediation id="SET_EO_FOR_APP">Set the ExecuteOptions registry value for the application, under the Image File Execution Options key, to zero to enable DEP for the application</remediation>
+	<remediation id="UPGRADE_APP_FOR_NXCOMPAT">Upgrade the application to a version that is built with DEP support</remediation>
+  </penalty>
+  
+  <penalty id="APP_OPTED_OUT_FROM_DEP" name="App opted out from DEP" value="2">
+    <reason>App {0} is opted out from DEP via the AppCompat\\Layers key.</reason>
+    <remediation id="SET_BOOT_DEP_POLICY">Set boot DEP policy (in boot.ini or the BCD Store) to AlwaysOn. On Windows 8+, ensure this is not overridden by the system MitigationOptions registry value</remediation>
+	<remediation id="SET_MO_DEP">On Windows 8+, configure the MitigationOptions registry value to enforce DEP as AlwaysOn with the Policy Override bit</remediation>
+	<remediation id="MO_ENABLE_DEP_ON_APP2">On Windows 8+, configure the MitigationsOptions registry value for the application under the Image File Execution Options key to enable DEP</remediation>
+	<remediation id="ACF_ENABLE_DEP_FOR_APP">Set application AppCompatFlags registry value for application to EnableNxShowUI or EnableNxHideUI</remediation>
+  </penalty> 
+  
+  <!-- ASLR -->
+  
+   <penalty id="OS_OUTDATED_FOR_ASLR" name="The operating system version is too old to support ASLR" value="20"> <!-- 10 -->
+    <reason>OS version does not support ASLR</reason>   
+    <remediation id="UPGRADE_TO_VISTA_SP2">Upgrade to Windows Vista SP2/Windows Server 2008 SP2 or later</remediation>
+    <remediation id="UPGRADE_TO_7_SP1">Upgrade to Windows 7 SP1/Windows Server 2008 R2 SP1 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+  
+  <penalty id="OS_OUTDATED_FOR_MANDATORY_ASLR" name="The operating system version is too old to support mandatory ASLR" value="20"> <!-- 10 -->
+    <reason>Operating systems prior to Vista do not support mandatory ASLR.</reason>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+ 
+  <penalty id="ASLR_IMPLEMENTATON_WEAK" name="ASLR implementation known to be weak on 32-bit operating systems prior to Windows 8" value="10">
+    <reason>Operating system is 32-bit and older than Windows 8.</reason>
+    <remediation id="UPGRADE_TO_64BIT_7_PLUS">Upgrade to 64-bit operating system, Windows 7 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>
+  </penalty>
+  
+  <penalty id="ASLR_CONFIG_NOT_DEFINED" name="ASLR configuration is not defined" value="10">
+    <reason>The MoveImages value under the HKLM\System\CurrentControlSet\Session Manager\Memory Management\ key is not defined so that the system defaults to OptIn. Strong security require ASLR to be configured AlwaysOn.</reason>
+    <remediation id="SET_MOVEIMAGES">On operating system versions 6.0-6.1, the MoveImages value under HKLM\System\CurrentControlSet\Session Manager\Memory Management\ should be set to 0xFFFFFFFF, so that ASLR is AlwaysOn</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+
+  <penalty id="ASLR_CONFIG_WEAK" name="ASLR configuration is weak" value="10">
+    <reason>The MoveImages value under the HKLM\System\CurrentControlSet\Session Manager\Memory Management\ key is set to 1, OptIn. Strong security require ASLR to be configured AlwaysOn.</reason>
+    <remediation id="SET_MOVEIMAGES">On operating system versions 6.0-6.1, the MoveImages value under HKLM\System\CurrentControlSet\Session Manager\Memory Management\ should be set to 0xFFFFFFFF, so that ASLR is AlwaysOn</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+
+  <penalty id="ASLR_DISABLED" name="ASLR is configured to be disabled" value="20"> <!-- 10 -->
+    <reason>The MoveImages value under the HKLM\System\CurrentControlSet\Session Manager\Memory Management\ key is set to 0 so that ASLR is disabled.</reason>
+    <remediation id="SET_MOVEIMAGES">On operating system versions 6.0-6.1, the MoveImages value under HKLM\System\CurrentControlSet\Session Manager\Memory Management\ should be set to 0xFFFFFFFF, so that ASLR is AlwaysOn</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+  
+  <penalty id="APP_DOES_NOT_SUPPORT_ASLR" name="App does not support ASLR" value="2">
+    <reason>App {0} is not built with ASLR support.</reason>
+	<remediation id="UPGRADE_TO_APP_WITH_DEP">Upgrade the application to a version that is built with ASLR support</remediation>
+  </penalty> 
+  
+  <!-- SEHOP  -->
+  
+  <penalty id="OS_OUTDATED_FOR_SEHOP" name="Operating system too outdated to support SEHOP" value="10">
+    <reason>OS version does not support SEHOP</reason>
+    <remediation id="UPGRADE_TO_VISTA_SP2">Upgrade to Windows Vista SP2/Windows Server 2008 SP2 or later</remediation>
+    <remediation id="UPGRADE_TO_7_SP1">Upgrade to Windows 7 SP1/Windows Server 2008 R2 SP1 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+  
+  <penalty id="SEHOP_IS_DISABLED" name="SEHOP is not enabled on this system" value="10">
+    <reason>SEHOP is not enabled on this system.</reason>
+    <remediation id="SET_DECV">On Vista SP1 through Windows 7, set the DisableExceptionChainValidation registry value under HKLM\System\CurrentControlSet\Session Manager\Kernel\ to 0</remediation>
+  </penalty>
+
+  <penalty id="SEHOP_NOT_PRESENT" name="SEHOP has not been configured on this system" value="10">
+    <reason>The MitigationOptions registry value under HKLM\System\CurrentControlSet\Session Manager\Kernel\ does not exist.</reason>
+    <remediation id="SET_MO_FOR_SEHOP">On Windows 8+, configure the MitigationOptions value under HKLM\System\CurrentControlSet\Session Manager\Kernel\ to enable SEHOP</remediation>
+  </penalty>
+  
+   <penalty id="SEHOP_NOT_CONFIGURED" name="SEHOP has not been configured on this system" value="10">
+    <reason>The MitigationOptions registry value under HKLM\System\CurrentControlSet\Session Manager\Kernel has not been configured to support SEHOP.</reason>
+	  <remediation id="SET_MO_FOR_SEHOP">On Windows 8+, configure the MitigationOptions value under HKLM\System\CurrentControlSet\Session Manager\Kernel\ to enable SEHOP</remediation>	
+  </penalty>
+
+  <penalty id="SEHOP_IS_DISABLED_WIN8" name="SEHOP is not enabled on this system" value="10">
+    <reason>SEHOP is disabled via the MitigationOptions registry value under HKLM\System\CurrentControlSet\Session Manager\Kernel.</reason>
+    <remediation id="SET_MO_FOR_SEHOP">On Windows 8+, configure the MitigationOptions value under HKLM\System\CurrentControlSet\Session Manager\Kernel\ to enable SEHOP</remediation>
+  </penalty>
+  
+  <penalty id="APP_DOES_NOT_SUPPORT_SEHOP" name="SEHOP is disabled for the app" value="2">
+    <reason>App {0} does not support SEHOP.</reason>
+	<remediation id="SET_DECV_FOR_APP">Under the Image File Execution Options registry key for the application, set the DisableExceptionChainValidation registry value to 0</remediation>	
+  </penalty>	
+  
+   <penalty id="SEHOP_OVERRIDDEN_FOR_APP" name="SEHOP is overridden by the app" value="2">
+    <reason>SEHOP is disabled for {0}'</reason>
+	<remediation id="SET_MO_ENABLE_SEHOP_FOR_APP">Delete or configure the MitigationsOptions registry value for the application under the Image File Execution Options key to enable SEHOP</remediation>	
+  </penalty>
+ 
+  <!-- Kernel SEHOP -->
+  
+  <penalty id="OS_OUTDATED_FOR_KSEHOP" name="Operating system too outdated to support kernel SEHOP" value="10">
+    <reason>OS version does not support kernel SEHOP</reason>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+
+  <penalty id="KSEHOP_NOT_CONFIGURED" name="Kernel SEHOP has not been configured on this system" value="10">
+    <reason>The KernelSEHOPEnabled registry value under HKLM\System\CurrentControlSet\Session Manager\Kernel\ has not been configured so kernel SEHOP is disabled</reason>
+	  <remediation id="SET_KSEHOP">On Windows 8.1+ x86 only, configure the KernelSEHOPEnabled value under HKLM\System\CurrentControlSet\Session Manager\Kernel\ to 1 to enable kernel SEHOP</remediation>	
+  </penalty>  
+  
+  <penalty id="KSEHOP_IS_DISABLED" name="Kernel SEHOP is disabled on this system" value="10">
+    <reason>The KernelSEHOPEnabled registry value under HKLM\System\CurrentControlSet\Session Manager\Kernel is set to {0} ('{1}') instead of {2} ('{3}') so kernel SEHOP is disabled</reason>
+    <remediation id="SET_KSEHOP">On Windows 8.1+ x86 only, configure the KernelSEHOPEnabled value under HKLM\System\CurrentControlSet\Session Manager\Kernel\ to 1 to enable kernel SEHOP</remediation>
+  </penalty>
+
+  <!-- Kernel Null Page -->
+  
+  <penalty id="OS_OUTDATED_FOR_NULL_PAGE_PROTECTION" name="Operating system too outdated to support null page mapping protection" value="10">
+    <reason>OS version does not support Null Page protection</reason>
+	<remediation id="UPGRADE_TO_7SP1_PATCH">Upgrade to Windows 7 SP1 and ensure system is fully patched</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+ 
+  <penalty id="ABLE_TO_MAP_NULL_PAGE" name="Able to map the null page" value="10">
+    <reason>Able to map the null memory page</reason>
+    <remediation id="UPGRADE_TO_7SP1_PATCH">Upgrade to Windows 7 SP1 and ensure system is fully patched</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+ 
+  <penalty id="NP_NOT_PRESENT" name="Null page mapping protection patch has not been applied" value="10">
+    <reason>A patch (any 1 out of [{0}]) that adds the null page protection feature to the OS has not been applied</reason>
+	<remediation id="INSTALL_NP_PATCH">Install one of the patches that adds the EnableLowVaAccess feature to disable mapping of the null page</remediation>
+	<remediation id="SET_NP">On 32-bit Windows 7, set the EnableLowVaAccess registry value under HKLM\System\CurrentControlSet\Session Manager\Memory Management\ to 0</remediation>		
+  </penalty>
+ 
+  <penalty id="NP_NOT_CONFIGURED" name="Null page mapping protection has not been configured on this system" value="10">
+    <reason>The EnableLowVaAccess registry value under HKLM\System\CurrentControlSet\Session Manager\Memory Management\ does not exist so the null page can be mapped</reason>
+	<remediation id="SET_NP">On 32-bit Windows 7, set the EnableLowVaAccess registry value under HKLM\System\CurrentControlSet\Session Manager\Memory Management\ to 0</remediation>	
+  </penalty>  
+  
+  <penalty id="NP_IS_DISABLED" name="Null page mapping protection is disabled on this system" value="10">
+    <reason>The EnableLowVaAccess registry value under HKLM\System\CurrentControlSet\Session Manager\Memory Management\ is set to {0} ('{1}') instead of {2} ('{3}') so the null page can be mapped</reason>
+	<remediation id="SET_NP">On 32-bit Windows 7, set the EnableLowVaAccess registry value under HKLM\System\CurrentControlSet\Session Manager\Memory Management\ to 0</remediation>	
+  </penalty>
+  
+  <!-- Control Flow Guard -->
+ 
+  <penalty id="OS_OUTDATED_FOR_CFG" name="OS version does not support CFG" value="20">
+    <reason>OS version does not support Control Flow Guard</reason>
+	<remediation id="UPGRADE_TO_WINDOWS_8_1_PATCH">Install patch KB3000850 on Windows 8.1</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>
+  </penalty>
+  
+   <penalty id="CFG_NOT_PRESENT" name="Hotfix KB3000850 has not been applied" value="20">
+    <reason>A patch (any 1 out of [{0}]) that adds the Control Flow Guard feature to the OS has not been applied</reason>
+	<remediation id="UPGRADE_TO_8_1_PATCH">Install patch KB3000850 on Windows 8.1/Windows Server 2012 R2</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>	
+  </penalty>
+  
+   <penalty id="CFG_DISABLED_FOR_OS" name="Control Flow Guard is disabled for the OS via the CFG registry value" value="20">
+    <reason>The EnableCFG registry value under HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\ is configured to {0} ('{1}') instead of {2} ('{3}') so Control Flow Guard is disabled</reason>
+	<remediation id="ENABLE_CFG">Delete the EnableCFG registry value under HKLM\System\CurrentControlSet\Control\Session Manager\Memory Management\ or set its value to 1</remediation>
+  </penalty>
+  
+  <penalty id="CFG_DISABLED_MO_FOR_OS" name="Control Flow Guard is disabled for the OS via system MitigationOptions registry value" value="20">
+    <reason>The system wide MitigationOptions registry value under HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\ is configured to 0x{0:2X} instead of 0x{1:2X} and the Control Flow Guard flag is set to {2} ('{3}')</reason>
+	<remediation id="ENABLE_CFG_MO">Set the MitigationOptions registry value under HKLM\System\CurrentControlSet\Control\Session Manager\Kernel\ to 0x{0:2X} to enable Control Flow Guard</remediation>
+  </penalty>
+
+  <!-- Certificate Padding -->
+  
+  <penalty id="CERTPADDING_NOT_PRESENT" name="Certificate padding patch has not been applied" value="5">
+    <reason>A patch (any 1 out of [{0}]) that adds the certificate padding feature to the OS has not been applied</reason>
+	  <remediation id="INSTALL_CERTPADDING_PATCH">Install the certificate padding patch and follow instructions in Microsoft Security Advisory 2915720 to enable certificate padding checks</remediation>
+  </penalty>
+
+  <penalty id="CERTPADDING_NOT_EXIST" name="EnableCertPaddingCheck registry value does not exist" value="5">
+    <reason>The EnableCertPaddingCheck registry value under {0} does not exist</reason>
+    <remediation id="FOLLOW_291572">Follow instructions in Microsoft Security Advisory 2915720 to enable certificate padding checks</remediation>
+  </penalty>
+
+  <penalty id="CERTPADDING_NOT_ENABLED" name="EnableCertPaddingCheck registry value is not set to 1" value="5">
+    <reason>The EnableCertPaddingCheck registry value under {0} is set to {1} ('{2}') instead of {3} ('{4}')</reason>
+    <remediation id="FOLLOW_291572">Follow instructions in Microsoft Security Advisory 2915720 to enable certificate padding checks</remediation>
+  </penalty>
+  
+  <!-- Secure Search Path -->
+  
+  <penalty id="OS_OUTDATED_FOR_SECURE_SEARCH_PATH" name="OS version does not support Secure Search Path" value="10">
+    <reason>OS version does not support secure search path</reason>
+    <remediation id="UPGRADE_XPSP3_APPLY_SSP_PATCH">Upgrade to at least Windows XP service pack 3. For OSes prior to windows 8, apply the the secure search path patch. Follow directions in Microsoft Knowledge Base article 2265107 to set registry value CWDIllegalInDLLSearch to 2</remediation>
+  </penalty>  
+
+   <penalty id="SSP_NOT_PRESENT" name="Secure search path patch has not been applied" value="10">
+    <reason>A hotfix (any 1 out of [{0}]) that adds the secure search path feature to the OS has not been applied</reason>
+    <remediation id="INSTALL_SSP_PATCH">Install the secure search path patch and follow instructions in Microsoft Knowledge Base article 2264107 to set registry value CWDIllegalInDLLSearch to 2 under HKLM\System\CurrentControlSet\Session Manager\</remediation>
+    <remediation id="UPGRADE_TO_8_FOLLOW_2264107">Upgrade to Windows 8+. Follow instructions in Microsoft Knowledge Base article 2264107 to set registry value CWDIllegalInDLLSearch to 2</remediation>
+  </penalty>
+
+  <penalty id="SSP_NOT_EXIST" name="CWDllIlegalInDllSearch registry value does not exist" value="10">
+    <reason>The CWDllIlegalInDllSearch registry value under HKLM\System\CurrentControlSet\Session Manager\ does not exist</reason>
+    <remediation id="FOLLOW_2264107">Follow instructions in Microsoft Knowledge Base article 2264107 to set registry value CWDIllegalInDLLSearch to 2</remediation>
+  </penalty>  
+  
+  <penalty id="SSP_NOT_ENABLED" name="CWDllIlegalInDllSearch registry value is not set to 2" value="10">
+    <reason>The CWDllIlegalInDllSearch registry value under HKLM\System\CurrentControlSet\Session Manager\ is set to {0} ('{1}') instead of being set to {2} ('{3}')</reason>
+	<remediation id="FOLLOW_2264107">Follow instructions in Microsoft Knowledge Base article 2264107 to set registry value CWDIllegalInDLLSearch to 2</remediation>
+  </penalty>
+  
+</penalties>

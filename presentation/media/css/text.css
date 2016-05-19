@@ -1,0 +1,23 @@
+body {
+   background-color: #FFFFFF;
+}
+
+a:link {
+   color: #1e88e5;
+}
+
+a:visited {
+   color: #1e88e5;
+}
+
+a:hover {
+   color: #1e88e5;
+}
+
+a:active {
+   color: #1e88e5;
+}
+
+html * {
+   font-family: Arial, sans-serif !important;
+}

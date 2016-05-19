@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>LOCKLEVEL</title>
+        <link rel="stylesheet" type="text/css" href=".\media\css\jquery.dataTables.css"> <!-- needed for styling tables -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.fixedHeader.css"> <!-- fixedHeader extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.colVis.css"> <!-- columnVisilibity extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.colReorder.css"> <!-- columnReorder extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\text.css"> <!-- main text styles -->    
+        <script type="text/javascript" src=".\media\js\jquery.js"></script> <!-- needed for rendering tables, need to come BEFORE jquery.dataTables.js -->
+        <script type="text/javascript" src=".\media\js\jquery.dataTables.js"></script> <!-- needed for rendering tables -->
+        <script type="text/javascript" src=".\media\js\dataTables.fixedHeader.js"></script> <!-- fixedHeader extension -->
+        <script type="text/javascript" src=".\media\js\dataTables.colVis.js"></script> <!-- columnVisilibity extension -->
+        <script type="text/javascript" src=".\media\js\dataTables.colReorder.js"></script> <!-- columnReorder extension -->    
+        <script type="text/javascript" src=".\media\js\utilities.js"></script> <!-- custom functions getSystemInformation, getSystemScore, getPluginScores, etc -->
+        <script type="text/javascript" src=".\score.js"></script> <!-- data to parse -->
+        <script type="text/javascript" class="init">
+            $(document).ready(function () {
+
+                var networkScore = getNetworkScore();
+                
+                $('#header').append(makeHeader('Overall', document, networkScore));
+                
+                var tableData = [];
+                
+                for (var system in scoreData.systems) {
+                    var systemInfo = getSystemInformation(system);
+                    var systemScore = getSystemScore(system);
+                    var pluginScores = getPluginScores(system);
+                    
+                    var rowData = systemInfo; // start the table data with the system info
+
+                    // only load data if there is data to load from the system
+                    // minimally there needs to be at least one plugin score and an overall score for the system
+                    if ((typeof pluginScores !== "undefined" && pluginScores != null) && (typeof systemScore !== "undefined" && systemScore != null)) {            
+                        for (var index=0; index < pluginNameMap.length; index++) {
+                            var item = pluginNameMap[index];
+                            var pluginName = item.name;
+                                        
+                            if (typeof pluginScores[pluginName] !== "undefined") { // get current plugin score if there is one
+                                rowData.push(parseFloat(pluginScores[pluginName]).toFixed(1));                                       
+                            } else {
+                                //rowData.push(parseFloat("0").toFixed(1)); //otherwise 0.0
+                                rowData.push("");
+                            }
+                        }
+
+                        rowData.push(parseFloat(systemScore).toFixed(1));
+
+                        // Host Name, Domain Name, IPv4 Address, IPv6 Address, MAC Address, Role, Pth Score, AE Score, AV Score, AW Score, HIPS Score, OS Version Score, OS Patch Date Score, Overall Score
+                        if (rowData.length == 14) { // (systemInfo) 6 + (plugins) 7 + (overall score) 1 = 14
+                            tableData.push(rowData);
+                        } else {
+                            console.log("rowData array didn't not have the expected length")
+                        }
+                    }
+                }                
+
+                var table = $('#page_table').DataTable({
+                        "data": tableData,
+                        "columns": [
+                            {title: 'Host Name'},
+                            {title: 'Domain Name'},
+                            {title: 'IPv4 Address'},
+                            {title: 'IPv6 Address'},
+                            {title: 'MAC Address'},
+                            {title: 'Role'},
+                            {title: 'PtH'},
+                            {title: 'Anti-Exploitation'},
+                            {title: 'Anti-Virus'},
+                            {title: 'Whitelisting'},
+                            {title: 'HIPS'},
+                            {title: 'OS Version'},
+                            {title: 'OS Patch'},
+                            {title: 'Overall'}
+                        ],
+                        "columnDefs": [
+                            {
+                                render: function(data) {
+                                    return '<a href="host.html?host=' + data + '">' + data + '</a>';
+                                },
+                                targets: 0
+                            }
+                        ],                
+                    "dom": 'RC<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                    "deferRender": true,
+                    "processing": true,
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    "pageLength": -1,
+                    "pagingType": "simple_numbers",
+                    "language": {
+                        "emptyTable": "No survey data",
+                        "infoEmpty": "No data to show",
+                        "processing": "Loading table data",
+                        "zeroRecords": "No data matched the search string"
+                    },
+                    order: [[13, 'asc']] // order by the Overall score column
+                });
+            
+            
+                new $.fn.dataTable.FixedHeader(table);
+            } );
+    
+        </script>
+    </head>
+    <body>
+        <div style="max-width: 70%; margin: 0 auto;">
+            <p style="text-align: left;"><img src=".\media\images\iad.png" alt="IAD logo" style="vertical-align: bottom;"><a href=".\main.html" style="font-size: 48px;">LOCKLEVEL</a></p>
+            <div id="header"></div>
+            <table id="page_table" class="display nowrap dataTable">
+            </table>
+        </div>
+    </body>
+</html>

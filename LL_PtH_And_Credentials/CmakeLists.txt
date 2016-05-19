@@ -1,0 +1,8 @@
+#LL_Pth makefile
+cmake_minimum_required (VERSION 3.2)
+project(LL_Pth)
+
+
+add_subdirectory(GetDomainRole "GetDomainRole")
+add_subdirectory(NetworkMapperMT "NetworkMapperMT")
+add_subdirectory(HighPrivilegeAccountAuditing "HighPrivilegeAccountAuditing")

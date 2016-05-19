@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LOCKLEVEL</title>
+        <link rel="stylesheet" type="text/css" href=".\media\css\jquery.dataTables.css"> <!-- needed for styling tables -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.fixedHeader.css"> <!-- fixedHeader extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.colVis.css"> <!-- columnVisilibity extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.colReorder.css"> <!-- columnReorder extension -->
+        <script type="text/javascript" src=".\media\js\jquery.js"></script> <!-- needed for rendering tables, need to come BEFORE jquery.dataTables.js -->
+        <script type="text/javascript" src=".\media\js\jquery.dataTables.js"></script> <!-- needed for rendering tables -->
+        <script type="text/javascript" src=".\media\js\dataTables.fixedHeader.js"></script> <!-- fixedHeader extension -->
+        <script type="text/javascript" src=".\media\js\dataTables.colVis.js"></script> <!-- columnVisilibity extension -->
+        <script type="text/javascript" src=".\media\js\dataTables.colReorder.js"></script> <!-- columnReorder extension -->    
+        <script type="text/javascript" src=".\media\js\utilities.js"></script> <!-- custom functions getSystemInformation, getSystemScore, getPluginScores, etc -->
+        <script type="text/javascript" src=".\score.js"></script> <!-- data to parse -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.childRow.css"> <!-- custom styles for child row icons -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\text.css"> <!-- main text styles -->    
+    </head>
+    <body>
+        <div style="max-width: 70%; margin: 0 auto;">
+            <p style="text-align: left;"><img src=".\media\images\iad.png" alt="IAD logo" style="vertical-align: bottom;"><a href=".\main.html" style="font-size: 48px;">LOCKLEVEL</a></p>
+            <div id="header"></div>
+            <div>
+                <h2 style="text-align: center;">Host Information</h2>
+                <table id="host-table" class="display dataTable" width="33%">
+                </table>
+            </div>			
+            <div>
+                <h2 style="text-align: center;">Penalties</h2>
+                <table id="penalty-table" class="display dataTable fixedHeader">
+                </table>
+            </div>
+            <div>
+                <h2 style="text-align: center">Remediations</h2>
+                <table id="remediation-table" class="display dataTable fixedHeader">
+                    <thead>
+                        <tr role="row">
+                            <th class="sorting" tabindex="0" role="columnheader" rowspan="1" colspan="1">Remediation</th>
+                            <th class="sorting" tabindex="0" role="columnheader" rowspan="1" colspan="1">Description</th>
+                            <th class="sorting" tabindex="0" role="columnheader" rowspan="1" colspan="1">Projected Score</th>
+                        </tr>
+                    </thead>
+                    <tbody id="remediation-table-body">
+                    </tbody>
+                    <tfoot>
+                        <tr role="row">
+                            <th class="sorting" tabindex="0" role="columnheader" rowspan="1" colspan="1">Remediation</th>
+                            <th class="sorting" tabindex="0" role="columnheader" rowspan="1" colspan="1">Description</th>
+                            <th class="sorting" tabindex="0" role="columnheader" rowspan="1" colspan="1">Projected Score</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+        
+            function reasons(penalty) {
+                var res = [];
+                if (Object.prototype.toString.call(penalty.reason) === '[object Array]') {
+                    for (var key in penalty.reason) {
+                        res.push(penalty.reason[key].text);
+                    }
+                    return res;
+                }
+                return [penalty.reason.text];
+            }
+            
+            function remediations(penalty) {
+                var res = [];
+                if (Object.prototype.toString.call(penalty.remediation) === '[object Array]') {
+                    for (var rem in penalty.remediation) {
+                        res.push(penalty.remediation[rem]);
+                    }
+                    return res;
+                }
+                return [penalty.remediation];
+            }
+
+            function deepequal(x, y) {
+                if ((typeof x == "object" && x != null) &&
+                    (typeof y == "object" && y != null)) {
+                    if (Object.keys(x).length != Object.keys(y).length)
+                        return false;
+
+                    for (var prop in x) {
+                        if (x.hasOwnProperty(prop) && y.hasOwnProperty(prop)) {
+                            if (!deepequal(x[prop], y[prop]))
+                                return false;
+                        } else
+                            return false;
+                    }
+
+                    return true;
+                }
+                else if (x !== y)
+                    return false;
+                else
+                    return true;
+            }
+
+            var system = getParameterByName('host');
+            var hostScore = getSystemScore(system)
+            var hostData = getFullSystemInformationWithDescription(system)
+			
+            $('#header').append(makeHeader(system, document, hostScore));
+
+            var penaltyData = [];
+            var remediationData = [];
+            // combine remediation descriptions for bottom table
+            // uniqify the penalties by plugin name (don't show multiple identical plugins unless they were
+            //                                              generated by different plugins)
+            var remediationIds = {};
+
+            var systemData = scoreData.systems[system];
+            for (var plugin in systemData.plugins) {
+                for (var penaltyName in systemData.plugins[plugin].penalties) {
+                    for (var penalty in systemData.plugins[plugin].penalties[penaltyName]) {
+                        penalty = systemData.plugins[plugin].penalties[penaltyName][penalty];
+                        penaltyData.push([
+                            '',    // dummy value for expand/collapse column icon                
+                            penalty.name,
+                            plugin,
+                            remediations(penalty),
+                            reasons(penalty)
+                        ]);
+
+                        var rems = remediations(penalty);
+                        for (var i = 0; i < rems.length; i++) {
+                            var currRemediation = rems[i];
+                            if (remediationIds[currRemediation.id]) {
+                                if (remediationIds[currRemediation.id].indexOf(currRemediation.text) !== -1) {
+                                    continue;
+                                }
+                                else {
+                                    remediationIds[currRemediation.id].push(currRemediation.text);
+                                }
+                            } else {
+                                remediationIds[currRemediation.id] = [currRemediation.text];
+                            }
+                        }
+                    }
+                }
+            }
+
+            // uniqify the penalties
+            penalties = {};
+            penaltyData = penaltyData.filter(function (element, index, array) {
+                var eq = false;
+                if (penalties[element.id]) {
+                    for (var i = 0; i < penalties[element.id].length; i++) {
+                        if (deepequal(penalties[element.id][i], element))
+                            eq = true;
+                    }
+                    if (eq) {
+                        return false;
+                    }
+                    else {
+                        penalties[element.id].push(element);
+                    }
+                } else {
+                    penalties[element.id] = [element];
+                }
+                return true;
+            });
+
+            for (var remId in remediationIds) {
+                var text = remediationIds[remId];
+                remediationData.push([
+                    remId,
+                    text,
+                    systemData.scores.remediations[remId]
+                ]);
+            }
+
+            var penaltyTable = $('#penalty-table').DataTable({
+                data: penaltyData,
+                columns: [
+                    { 
+                        className: 'details-control',
+                        orderable: false,
+                        data: null,
+                        defaultContent: ''
+                    },
+                    {title: 'Penalty', width: '50%'},
+                    {title: 'Plugin', width: '25%'},
+                    {title: 'Remediations', width: '25%'},
+                    {title: 'Reason'}
+                ],
+                columnDefs: [
+                    {
+                        render: function(data) {
+                            return data.map(function(remediation) {
+                                return '<a href="#' + remediation.id + '">' + remediation.id + '</a>';
+                            }).join('<br>');
+                        },
+                        targets: 3
+                    },
+                    {
+                        visible: false,
+                        targets: 4
+                    }
+                ],
+                "dom": 'RC<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                order: [[2, 'desc'],[3, 'asc']],
+                deferRender: true,
+                processing: true,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                pageLength: 25,
+                pagingType: "simple_numbers",
+                language: {
+                    emptyTable: "No penalty data",
+                    infoEmpty: "No data to show",
+                    processing: "Loading table data",
+                    zeroRecords: "No data matched the search string"
+                },
+                colVis: {
+                    exclude: [ 0, 4 ] // exclude first column (0-based, not 1-based) so that it doesn't show up in the show/hide columns dialog since this is the expand/collapse icon column, also hide Reasons hidden row for child row, it is seen as column index 4
+                },
+                colReorder: {
+                    fixedColumns: 1 // first column (1-based, not 0-based), starting from the left, should be fixed and not reorderable since this is the expand/collapse icon column
+                }
+            });
+            
+            var remediationTable = $('#remediation-table').DataTable({
+                data: remediationData,
+                columns: [
+                    {title: 'Remediation', width: '20%'},
+                    {title: 'Description', width: '70%'},
+                    {title: 'Projected Score', width: '10%'}
+                ],
+                columnDefs: [
+                    {
+                        render: function(data) {
+                            return data.join('<br>');
+                        },
+                        targets: 1
+                    },
+                    {
+                        render: function(data) {
+                            return '<span id="' + data +'">' + data + '</span>';
+                        },
+                        targets: 0
+                    }
+                ],
+                "dom": 'RC<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                order: [[2, 'desc'],[0, 'asc']],
+                deferRender: true,
+                processing: true,
+                lengthMenu: [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                pageLength: 25,
+                pagingType: "simple_numbers",
+                language: {
+                    emptyTable: "No remediation data",
+                    infoEmpty: "No data to show",
+                    processing: "Loading table data",
+                    zeroRecords: "No data matched the search string"
+                }
+            });
+
+			
+            var hostTable = $('#host-table').DataTable({
+                data: hostData,
+                paging: false,
+				info: false,
+				searching: false,
+				ordering: false,
+				processing: true,
+                "dom": 'rt',
+                columns: [
+                    {title: 'Property', width: '50%'},
+                    {title: 'Value', width: '50%'}
+                ],
+                columnDefs: [
+                    {
+                        orderable: false,
+                        targets: 0
+                    },
+                    {
+                        orderable: false,
+                        targets: 1
+                    }
+                ],				
+                language: {
+                    emptyTable: "No host data",
+                    infoEmpty: "No data to show",
+                    processing: "Loading table data",
+                }
+            });
+			
+            function getReason(data) {
+                return '<div style="margin: 0 0 0 30px;">' + data[4].join('<br>') + '</div>';
+            }
+
+            $('#penalty-table tbody').on('click', 'td.details-control', function () {
+                var tr = $(this).closest('tr');
+                var row = penaltyTable.row(tr);
+
+                if (row.child.isShown()) {
+                    row.child.hide();
+                    tr.removeClass('shown');
+                } else {
+                    row.child(getReason(row.data())).show();
+                    tr.addClass('shown');
+                }
+            })
+        
+            //apply FixedHeader to all table elements that have the made up fixedHeader style applied to them
+            $('table.fixedHeader').dataTable().each( function() {
+                new FixedHeader(this);
+                }
+            );
+        });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,1 @@
+GetSystemInfo is used to conduct the survey for the OS component. No separate survey tool is needed.

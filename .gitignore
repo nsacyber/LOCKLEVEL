@@ -1,0 +1,15 @@
+/GetSystemInfo/Release
+/GetSystemInfo/Debug
+/GetSystemInfo/GetSystemInfo/Release
+/GetSystemInfo/GetSystemInfo/Debug
+/GetSystemInfo/GetSystemInfo/x64
+/**/obj
+/LL_AV/GetAVStatus/Debug
+/LL_AV/GetAVStatus/Release
+/LL_AV/GetAVStatus/GetAVStatus/Debug
+/LL_AV/GetAVStatus/GetAVStatus/Release
+/_build/*
+*.sdf
+*.opensdf
+*.suo
+presentation/score*.js

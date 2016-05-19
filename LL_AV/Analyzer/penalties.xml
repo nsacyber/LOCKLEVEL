@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<penalties>
+	<penalty id="DAT_OUTDATED" name="DAT outdated" value="50">
+		<reason>DAT file version {0} published on {1} is {2} days old</reason>
+		<remediation id="UPDATE_DAT">Update the DAT file</remediation>
+	</penalty>
+	<penalty id="DAT_VERY_OUTDATED" name="DAT very outdated" value="100">
+		<reason>DAT file version {0} published on {1} is {2} days old which is beyond the recommended value of {3} days</reason>
+		<remediation id="UPDATE_DAT">Update the DAT file</remediation>
+	</penalty>
+	<penalty id="ARTEMIS_SERVER_UNREACHABLE" name="artemis server unreachable" value="100">
+		<reason>Unable to resolve GTI server DNS address of {0}</reason>
+		<remediation id="CHECK_ARTEMIS_CONNECTIVITY">Investigate GTI connectivity issues</remediation>
+	</penalty>
+	<penalty id="ARTEMIS_SERVER_UNEXPECTED" name="artemis server unexpected" value="50">
+		<reason>The GTI server DNS address of {0} resolved to {1} which is not the expected value of {2}</reason>
+		<remediation id="CHECK_ARTMIS_CONFIGURATION">Confirm GTI network configuration is correct</remediation>
+	</penalty>
+	<penalty id="ARTEMIS_DISABLED" name="artemis disabled" value="100">
+		<reason>GTI is Disabled for the {0} component</reason>
+		<remediation id="ENABLE_ARTEMIS">Enable GTI</remediation>
+	</penalty>
+	<penalty id="ARTEMIS_SENSITIVITY_LOW" name="artemis sensitivity low" value="50">
+		<reason>GTI Sensitivity Level is set to {0} which is below the recommended level of Medium for the {1} component</reason>
+		<remediation id="SET_ARTEMIS_SENSITIVITY_MEDIUM">Set the GTI Sensitivity Level to Medium or higher</remediation>
+	</penalty>
+	<penalty id="ARTEMIS_SENSITIVITY_VERY_LOW" name="artemis sensitivity very low" value="100">
+		<reason>GTI Sensitivity Level is set to {0} which is far below the recommended level of Medium for the {1} component</reason>
+		<remediation id="SET_ARTEMIS_SENSITIVITY_MEDIUM">Set the GTI Sensitivity Level to Medium or higher</remediation>
+	</penalty>
+	<penalty id="AV_ENGINE_OUTDATED" name="AV engine is outdated" value="50">
+		<reason>The AV engine version is {0} which is older than the latest supported engine version of {1}. Version 5600 and earlier are end of life.</reason>
+		<remediation id="UPDATE_AV_ENGINE">Update the AV engine to the latest supported version. See http://www.mcafee.com/us/support/support-eol-scan-engine.aspx for more information.</remediation>
+	</penalty>
+	<penalty id="AV_ENGINE_VERY_OUTDATED" name="AV engine is very outdated" value="100">
+		<reason>The AV engine version is {0} which is older than the minimum recommended engine version of {1}. Version 5600 and earlier are end of life.</reason>
+		<remediation id="UPDATE_AV_ENGINE">Update the AV engine to the latest supported version. See http://www.mcafee.com/us/support/support-eol-scan-engine.aspx for more information.</remediation>
+	</penalty>
+	<penalty id="VSE_OUTDATED" name="VSE is outdated" value="50">
+		<reason>The VirusScan Enterprise version is {0} which is older than latest recommended version of {1}</reason>
+		<remediation id="UPDATE_OLD_VSE">Update VirusScan Enterprise to the latest recommended version. See https://kc.mcafee.com/corporate/index?page=content&amp;id=kb51111 for more information.</remediation>
+	</penalty>
+	<penalty id="VSE_VERY_OUTDATED" name="VSE is very outdated" value="100">
+		<reason>The VirusScan Enterprise version is {0} which is older than minimum recommended version of {1}</reason>
+		<remediation id="UPDATE_VERY_OLD_VSE">Update VirusScan Enterprise to the minimum recommended version. See https://kc.mcafee.com/corporate/index?page=content&amp;id=kb51111 for more information.</remediation>
+	</penalty>
+	<penalty id="VSE_SERVICE_NOT_AUTOMATIC" name="VSE service is not automatically starting" value="100">
+		<reason>The {0} service start mode is set to '{1}' rather than '{2}' so the system is not protected at the next boot</reason>
+		<remediation id="SET_VSE_SERVICE_AUTO">Change the VirusScan Enterprise service Startup Type to Automatic</remediation>
+	</penalty>
+	<penalty id="VSE_SERVICE_NOT_RUNNING" name="VSE service is not running" value="100">
+		<reason>The {0} service state is '{1}' rather than '{2}' so the system is not protected</reason>
+		<remediation id="START_VSE_SERVICE">Start the VirusScan Enterprise service</remediation>
+	</penalty>
+	<penalty id="VSE_STARTUP_DISABLED" name="VSE startup is disabled" value="100">
+		<reason>VSE on access scanning at system startup is disabled</reason>
+		<remediation id="ENABLE_VSE_STARTUP">Enable on access scanning at system startup</remediation>
+	</penalty>
+	<penalty id="VSE_NOT_INSTALLED" name="VSE is not installed" value="100">
+		<reason>VirusScan Enterprise is not installed</reason>
+		<remediation id="INSTALL_VSE">Install VirusScan Enterprise</remediation>
+	</penalty>
+</penalties>

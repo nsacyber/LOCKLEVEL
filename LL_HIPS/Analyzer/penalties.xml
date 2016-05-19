@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<penalties>
+  <penalty id="HIPS_SERVICE_NOT_RUNNING" name="HIPS service is not running" value="100">
+    <reason>The HIPS service state is '{0}' rather than '{1}' so the system is not protected</reason>
+    <remediation id="START_HIPS_SERVICE">Start the HIPS service</remediation>
+  </penalty>
+  <penalty id="HIPS_NOT_LOGGING_LOW" name="HIPS reaction is not logging for low severity" value="10">
+    <reason>The HIPS Protection policy is configured for a reaction level of {0} rather than Log (or higher) for low severity events</reason>
+    <remediation id="HIPS_LOG_LOW">Change the HIPS Protection policy so low severity events are at least set to Log</remediation>
+  </penalty>
+  <penalty id="HIPS_NOT_ENABLED" name="HIPS is not enabled" value="100">
+    <reason>HIPS is not enabled in HIPS policy</reason>
+    <remediation id="ENABLE_HIPS">Enable HIPS in HIPS policy</remediation>
+  </penalty>
+  <penalty id="HIPS_NOT_ENFORCING" name="HIPS is not enforcing" value="100">
+    <reason>HIPS is in adaptive mode (aka audit mode) and not enforcing</reason>
+    <remediation id="DISABLE_HIPS_AUDIT_MODE">Disable HIPS adaptive mode (aka audit mode)</remediation>
+  </penalty>
+  <penalty id="UPDATE_HIPS" name="HIPS is outdated" value="50">
+    <reason>The version of HIPS ({0}) is not the latest recommended version ({1})</reason>
+    <remediation id="UPDATE_HIPS">Update HIPS to the latest version</remediation>
+  </penalty>
+  <penalty id="HIPS_NOT_PREVENTING_HIGH" name="HIPS reaction is not prevent for high severity" value="80">
+    <reason>The HIPS Protection policy is configured for a reaction level of {0} rather than Prevent for high severity events</reason>
+    <remediation id="HIPS_PREVENT_HIGH">Change the HIPS Protection policy so high severity events are set to Prevent</remediation>
+  </penalty>
+  <penalty id="UPDATE_HIPS_OLD" name="HIPS is very outdated" value="100">
+    <reason>The version of HIPS ({0}) is older than the minimum recommended version ({1}) and is very outdated</reason>
+    <remediation id="UPDATE_HIPS">Update HIPS to the latest version</remediation>
+  </penalty>
+  <penalty id="HIPS_NOT_PREVENTING_MEDIUM" name="HIPS reaction is not prevent for medium severity" value="40">
+    <reason>The HIPS Protection policy is configured for a reaction level of {0} rather than Prevent for medium severity events</reason>
+    <remediation id="HIPS_PREVENT_MEDIUM">Change the HIPS Protection policy so medium severity events are set to Prevent</remediation>
+  </penalty>
+  <penalty id="HIPS_NOT_INSTALLED" name="HIPS is not installed" value="100">
+    <reason>HIPS is not installed</reason>
+    <remediation id="INSTALL_HIPS">Install HIPS</remediation>
+  </penalty>
+  <penalty id="UPDATE_HIPS_CONTENT" name="HIPS security content is outdated" value="50">
+    <reason>The HIPS security content version ({0}) is {1} days old which is beyond the limit of {2} days</reason>
+    <remediation id="UPDATE_HIPS_CONTENT">Update HIPS security content to the latest version</remediation>
+  </penalty>
+  <penalty id="HIPS_SERVICE_NOT_AUTOMATIC" name="HIPS service is not automatically starting" value="100">
+    <reason>The HIPS service start mode is set to '{0}' rather than '{1}' so the system is not protected at the next boot</reason>
+    <remediation id="SET_HIPS_SERVICE_AUTO">Change the HIPS service Startup Type to Automatic</remediation>
+  </penalty>
+</penalties>

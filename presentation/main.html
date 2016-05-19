@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>LOCKLEVEL</title>
+        <script type="text/javascript" src=".\media\js\gauge.js"></script> <!-- needed for drawing the gauges, this has been customized -->
+        <script type="text/javascript" src=".\media\js\jquery.js"></script> <!-- needed for loading gauge code in the $(document).ready(function) for init, otherwise the init needs to be AFTER the HTML code that declares the canvas elements -->
+        <script type="text/javascript" src=".\media\js\utilities.js"></script> <!-- custom functions getSystemInformation, getSystemScore, getPluginScores, etc -->
+        <script type="text/javascript" src=".\score.js"></script> <!-- data to parse -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\text.css"> <!-- main text styles -->    
+    </head>
+    <body>
+        <div style="max-width: 70%; margin: 0 auto;">
+            <!-- <div id="header"></div> -->
+            <p style="text-align: left;"><img src=".\media\images\iad.png" alt="IAD logo" style="vertical-align: bottom;"><a href=".\main.html" style="font-size: 48px;">LOCKLEVEL</a></p>
+            <p style="text-align: center;">A mitigation effectiveness tool that scores how well the <a href="https://www.iad.gov">Information Assurance Directorate</a> <a href="https://www.nsa.gov/ia/_files/factsheets/I43V_Slick_Sheets/Slicksheet_Top10IAMitigationStrategies_Web.pdf">top 10 mitigations</a> have been implemented.</p>
+            <p style="text-align: center;">No gauge indicates there was no data for the mitigation. If you don't like your score, then implement <span style="font-weight: bold;"><a href=".\remediations.html">Remediations</a></span> to increase your network score.</p>
+        <table style="width: 65% !important; margin: 0 auto; border-collapse: collapse; width: 100%;">
+            <tr>
+                <td></td>
+                <td style="text-align: center; vertical-align: top;">
+                    <div style="margin: 0 auto;"><canvas id="network_gauge" width="300" height="300"></canvas></div>
+                    <div id="network_text" style="font-weight: bold;">&nbsp;</div>
+                    <h1><a href=".\overallscores.html">Overall</a></h1>
+                </td>
+                <td></td>
+            <tr>
+            <tr>
+                <td style="text-align: center; vertical-align: top;">
+                    <div style="margin: 0 auto"><canvas id="Pass-the-Hash_gauge" width="200" height="200"></canvas></div>
+                    <div id="Pass-the-Hash_text" style="font-weight: bold;">&nbsp;</div>
+                    <h2><a href=".\plugin.html?plugin=Pass-the-Hash">Pass-the-Hash</a></h2>
+                </td>
+                <td style="text-align: center; vertical-align: top;">
+                    <div style="margin: 0 auto"><canvas id="AntiExploitation_gauge" width="200" height="200"></canvas></div>
+                    <div id="AntiExploitation_text" style="font-weight: bold;">&nbsp;</div>
+                    <h2><a href=".\plugin.html?plugin=AntiExploitation">Anti-Exploitation</a></h2>
+                </td>
+                <td style="text-align: center; vertical-align: top;">
+                    <div style="margin: 0 auto"><canvas id="AW_gauge" width="200" height="200"></canvas></div>
+                    <div id="AW_text" style="font-weight: bold;">&nbsp;</div>
+                    <h2><a href=".\plugin.html?plugin=AW">Application Whitelisting</a></h2>
+                </td>
+            </tr>
+            <tr>
+                <td style="text-align: center; vertical-align: top; width: 33%;">
+                    <div style="margin: 0 auto"><canvas id="AVFileReputation_gauge" width="200" height="200"></canvas></div>
+                    <div id="AVFileReputation_text" style="font-weight: bold;">&nbsp;</div>
+                    <h2><a href=".\plugin.html?plugin=AVFileReputation">AV File Reputation</a></h2>
+                </td>
+                <td style="text-align: center; vertical-align: top;">
+                    <div style="margin: 0 auto"><canvas id="HBSS_gauge" width="200" height="200"></canvas></div>
+                    <div id="HBSS_text" style="font-weight: bold;">&nbsp;</div>
+                    <h2><a href=".\plugin.html?plugin=HBSS">Host Intrusion Prevention</a></h2>
+                </td>
+                <td style="text-align: center; vertical-align: top;">
+                    <div style="margin: 0 auto"><canvas id="OperatingSystem_gauge" width="200" height="200"></canvas></div>
+                    <div id="OperatingSystem_text" style="font-weight: bold;">&nbsp;</div>
+                    <h2><a href=".\plugin.html?plugin=OperatingSystem">Operating System Version</a></h2>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td style="text-align: center; vertical-align: top;">
+                    <div style="margin: 0 auto"><canvas id="OperatingSystemPatchHealth_gauge" width="200" height="200"></canvas></div>
+                    <div id="OperatingSystemPatchHealth_text" style="font-weight: bold;">&nbsp;</div>
+                    <h2><a href=".\plugin.html?plugin=OperatingSystemPatchHealth">Operating System Patch Health</a></h2>
+                </td>
+                <td></td>
+            </tr>
+        </table>
+        </div>
+        <script type="text/javascript" class="init">
+            $(document).ready(function () {
+                //$('#header').append(makeHeader('Dashboard', document, null));
+
+                var opts = {
+                    lines: 100, // The number of lines to draw = 10 values (1 - 10) * 10 increments per value (.0 - .9)
+                    angle: 0.25, // The length of each line
+                    lineWidth: 0.3, // The line thickness
+                    pointer: {
+                        length: 0.7, // The radius of the inner circle
+                        strokeWidth: 0.019, // The rotation offset
+                        color: '#000000' // Fill color
+                    },
+                    limitMax: 'true',   // If true, the pointer will not go past the end of the gauge
+                    colorStart: '#000000', 
+                    colorStop: '#1e88e5', 
+                    strokeColor: '#DBDBDB', 
+                    generateGradient: true,
+                    places: 1 // number of decimal places to show on the number displayed on the gauge
+                };
+
+                if ((typeof scoreData.scores !== "undefined" && scoreData.scores != null) && (typeof scoreData.scores.plugins !== "undefined" && scoreData.scores.plugins != null)) {
+                    for (var index = 0; index < pluginNameMap.length; index++) {
+                        var item = pluginNameMap[index];
+                        var pluginName = item.name;
+                        var pluginScore = getPluginNetworkScore(pluginName);
+                        
+                        if (typeof pluginScore !== "undefined" && pluginScore != null) {
+                            var gaugeElement = document.getElementById(pluginName + '_gauge');
+                            var textElement = document.getElementById(pluginName + '_text');
+
+                            if (gaugeElement != null && textElement != null) {
+                                var gauge = new Gauge(gaugeElement).setOptions(opts); // create gauge
+                                gauge.maxValue = 10.0; // set max gauge value
+                                gauge.minValue = 1.0; // set min gauge value
+                                gauge.animationSpeed = 1; // set animation speed (32 is default value)
+                                
+                                if (pluginScore >= 1) {
+                                    gauge.setTextField(textElement); //canvas element to display the score
+                                    gauge.set(pluginScore); // set actual value
+                                }
+                            }
+                        }
+                    }
+                }
+            
+                if (typeof scoreData.scores.base !== "undefined" && scoreData.scores.base != null) {
+                    var networkScore = getNetworkScore();
+                    
+                    if (typeof networkScore !== "undefined" && networkScore != null) {
+                        networkGaugeElement = document.getElementById('network_gauge');
+                        networkTextElement = document.getElementById('network_text');
+
+                        if (networkGaugeElement != null && networkTextElement != null) {
+                            var gauge = new Gauge(networkGaugeElement).setOptions(opts); // create gauge
+                            gauge.maxValue = 10.0; // set max gauge value
+                            gauge.minValue = 1.0; // set min gauge value
+                            gauge.animationSpeed = 1; // set animation speed (32 is default value)
+                            
+                            if (networkScore >= 1) {
+                                gauge.setTextField(networkTextElement); //canvas element to display the score
+                                gauge.set(networkScore); // set actual value
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    </body>
+</html>

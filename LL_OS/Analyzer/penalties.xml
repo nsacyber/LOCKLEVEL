@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<penalties>
+  <penalty id="UPGRADE_TO_WIN7" name="Not using the latest operating system version" value="60">
+    <reason>{0}{1} is installed which isn't the newest operating system</reason>
+    <remediation id="UPGRADE_TO_7_SP1">Upgrade to Windows 7 SP1/Windows Server 2008 R2 SP1 or later</remediation>
+  </penalty>
+  <penalty id="UPGRADE_TO_WIN8" name="Not using the latest operating system version" value="30">
+    <reason>{0}{1} is installed which isn't the newest operating system</reason>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+  </penalty>
+  <penalty id="UPGRADE_TO_WIN10" name="Not using the latest operating system version" value="10">
+    <reason>{0}{1} is installed which isn't the newest operating system.</reason>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>
+  </penalty>
+  <penalty id="UNSUPPORTED_SP_WIN7" name="Unsupported service pack" value="100">
+    <reason>{0}{1} is no longer supported by Microsoft when running this service pack</reason>
+    <remediation id="UPGRADE_TO_7_SP1">Upgrade to Windows 7 SP1/Windows Server 2008 R2 SP1 or later</remediation>
+  </penalty>
+  <penalty id="UNSUPPORTED_OS" name="Unsupported operating system version" value="100">
+    <reason>{0}{1} is installed. Windows XP/Windows Server 2003 and earlier operating systems are no longer supported by Microsoft</reason>
+    <remediation id="UPGRADE_TO_VISTA_SP2">Upgrade to Windows Vista SP2/Windows Server 2008 SP2 or later</remediation>
+    <remediation id="UPGRADE_TO_7_SP1">Upgrade to Windows 7 SP1/Windows Server 2008 R2 SP1 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8">Upgrade to Windows 8/Windows Server 2012 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+    <remediation id="UPGRADE_TO_WINDOWS_10">Upgrade to Windows 10/Windows Server 2016 or later</remediation>
+  </penalty>
+  <penalty id="UPGRADE_TO_WIN81" name="Not using the latest operating system version" value="20">
+    <reason>{0}{1} is installed which isn't the newest operating system.</reason>
+    <remediation id="UPGRADE_TO_WINDOWS_8_1">Upgrade to Windows 8.1/Windows Server 2012 R2 or later</remediation>
+  </penalty>
+  <penalty id="UNSUPPORTED_SP_WINVISTA" name="Unsupported service pack" value="100">
+    <reason>{0}{1} is no longer supported by Microsoft when running this service pack</reason>
+    <remediation id="UPGRADE_TO_VISTA_SP2">Upgrade to Windows Vista SP2/Windows Server 2008 SP2 or later</remediation>
+  </penalty>
+</penalties>

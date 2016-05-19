@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GenerateAVFileReputationPenalties", "GenerateAVFileReputationPenalties.pyproj", "{CA9811C3-1023-4CBE-B881-ADC4BEA704AE}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA9811C3-1023-4CBE-B881-ADC4BEA704AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA9811C3-1023-4CBE-B881-ADC4BEA704AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

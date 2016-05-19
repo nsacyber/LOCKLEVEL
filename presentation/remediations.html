@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>LOCKLEVEL</title>
+        <link rel="stylesheet" type="text/css" href=".\media\css\jquery.dataTables.css"> <!-- needed for styling tables -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.fixedHeader.css"> <!-- fixedHeader extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.colVis.css"> <!-- columnVisilibity extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.colReorder.css"> <!-- columnReorder extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\text.css"> <!-- main text styles -->            
+        <script type="text/javascript" src=".\media\js\jquery.js"></script> <!-- needed for rendering tables, need to come BEFORE jquery.dataTables.js -->
+        <script type="text/javascript" src=".\media\js\jquery.dataTables.js"></script> <!-- needed for rendering tables -->
+        <script type="text/javascript" src=".\media\js\dataTables.fixedHeader.js"></script> <!-- fixedHeader extension -->
+        <script type="text/javascript" src=".\media\js\dataTables.colVis.js"></script> <!-- columnVisilibity extension -->
+        <script type="text/javascript" src=".\media\js\dataTables.colReorder.js"></script> <!-- columnReorder extension -->    
+        <script type="text/javascript" src=".\media\js\utilities.js"></script> <!-- custom functions getSystemInformation, getSystemScore, getPluginScores, etc -->
+        <script type="text/javascript" src=".\score.js"></script> <!-- data to parse -->
+        <script type="text/javascript" src=".\media\js\remediations.js"></script> <!-- original remediations definitions without the formatting, remediationDefinitions is defined here -->
+        <script type="text/javascript" class="init">
+            $(document).ready(function () {
+
+                $('#header').append(makeHeader('Remediations', document, null));
+
+                var table = $('#remediation_table').DataTable({
+                    "dom": 'RC<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                    "deferRender": true,
+                    "processing": true,
+                    "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                    "pageLength": 25,
+                    "order": [[2, "desc"], //sort Projected Score column descending
+                              [0, 'asc']], //secondarily sort by name ascending
+                    "pagingType": "simple_numbers",
+                    "language": {
+                        "emptyTable": "No survey data",
+                        "infoEmpty": "No data to show",
+                        "processing": "Loading table data",
+                        "zeroRecords": "No data matched the search string"
+                    }
+                });
+
+                var currentScore = scoreData.remediation_scores.null;
+
+                for (var remediationID in scoreData.remediation_scores) {
+                    // "null" is actually the current score for the entire network so filter it out along with bad elements
+                    if (remediationID != "" && remediationID != null && remediationID != "null") {
+                        var remediatonData = getRemediationScoreByID(remediationID);
+                        var projectedScore = remediatonData[1];
+                        var difference = projectedScore - currentScore;
+
+                        var definition = ""
+                        
+                        if(remediationDefinitions[remediationID] !== "undefined" && remediationDefinitions[remediationID] != null) {
+                            definition = remediationDefinitions[remediationID].description;
+                        }
+                        
+                        table.row.add([remediationID, definition, projectedScore, difference.toFixed(1)]).draw();
+                    }
+                }
+                
+                new $.fn.dataTable.FixedHeader(table);
+            });
+        </script>
+    </head>
+    <body>
+        <div style="max-width: 70%; margin: 0 auto;">
+            <p style="text-align: left;"><img src=".\media\images\iad.png" alt="IAD logo" style="vertical-align: bottom;"><a href=".\main.html" style="font-size: 48px;">LOCKLEVEL</a></p>
+            <div id="header"></div>
+            <div id="outer_container">
+                <div id="remediation_table_wrapper" class="dataTables_wrapper">
+                    <table id="remediation_table" class="display dataTable" role="grid" aria-describedby="remediation_info" style="width: 100%;">
+                        <thead>
+                            <tr role="row">
+                                <th class="sorting" tabindex="0" aria-controls="remediation_table" role="columnheader" rowspan="1" colspan="1" aria-label="Name" style="width: 25%;">Name</th>
+                                <th class="sorting" tabindex="1" aria-controls="example" role="columnheader" rowspan="1" colspan="1" aria-label="Description" style="width: 55%">Description</th>
+                                <th class="sorting" tabindex="2" aria-controls="remediation_table" role="columnheader" rowspan="1" colspan="1" aria-label="Projected Score" style="width: 10%;">Projected Score</th>
+                                <th class="sorting" tabindex="2" aria-controls="remediation_table" role="columnheader" rowspan="1" colspan="1" aria-label="Improved By" style="width: 10%;">Improved By</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th class="dt-body-right" rowspan="1" colspan="1">Name</th>
+                                <th class="dt-body-right" rowspan="1" colspan="1">Description</th>
+                                <th class="dt-body-right" rowspan="1" colspan="1">Projected Score</th>
+                                <th class="dt-body-right" rowspan="1" colspan="1">Improved By</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                         </tbody>
+                    </table>
+                    <div class="dataTables_info" id="remediation_info" role="status" aria-live="polite"></div>
+                    <div class="dataTables_paginate" id="remediation_paginate"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

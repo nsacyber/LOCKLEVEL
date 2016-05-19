@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+        <title>LOCKLEVEL</title>
+        <link rel="stylesheet" type="text/css" href=".\media\css\jquery.dataTables.css"> <!-- needed for styling tables -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.fixedHeader.css"> <!-- fixedHeader extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.colVis.css"> <!-- columnVisilibity extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\dataTables.colReorder.css"> <!-- columnReorder extension -->
+        <link rel="stylesheet" type="text/css" href=".\media\css\text.css"> <!-- main text styles -->            
+        <script type="text/javascript" src=".\media\js\jquery.js"></script> <!-- needed for rendering tables, need to come BEFORE jquery.dataTables.js -->
+        <script type="text/javascript" src=".\media\js\jquery.dataTables.js"></script> <!-- needed for rendering tables -->
+        <script type="text/javascript" src=".\media\js\dataTables.fixedHeader.js"></script> <!-- fixedHeader extension -->
+        <script type="text/javascript" src=".\media\js\dataTables.colVis.js"></script> <!-- columnVisilibity extension -->
+        <script type="text/javascript" src=".\media\js\dataTables.colReorder.js"></script> <!-- columnReorder extension -->    
+        <script type="text/javascript" src=".\media\js\utilities.js"></script> <!-- custom functions getSystemInformation, getSystemScore, getPluginScores, etc -->
+        <script type="text/javascript" src=".\score.js"></script> <!-- data to parse -->
+        <script type="text/javascript" class="init">
+            $(document).ready(function () {
+
+                var pluginName = getParameterByName('plugin');
+                var displayName = getPluginDisplayName(pluginName);
+                var pluginScore = getPluginNetworkScore(pluginName);
+                
+                $('#header').append(makeHeader(displayName, document, pluginScore));
+
+                var tableData = [];
+                
+                for (var system in scoreData.systems) {
+                    var rowData = getSystemInformation(system);
+                    var pluginScore = getPluginScore(system, pluginName);
+
+                    // only load data if there is data to load for the system
+                    // minimally there needs to be a score for the plugin for the system
+                    if (pluginScore !== "undefined" && pluginScore != null) {
+                        rowData.push(parseFloat(pluginScore).toFixed(1)); 
+                        tableData.push(rowData);
+                    }
+                }
+
+                var table = $('#page_table').DataTable({
+                        data: tableData,
+                        "columns": [
+                            {title: 'Host Name'},
+                            {title: 'Domain Name'},
+                            {title: 'IPv4 Address'},
+                            {title: 'IPv6 Address'},
+                            {title: 'MAC Address'},
+                            {title: 'Role'},
+                            {title: 'Score'}
+                        ],
+                        columnDefs: [
+                            {
+                                render: function(data) {
+                                    return '<a href="host.html?host=' + data + '">' + data + '</a>';
+                                },
+                                targets: 0
+                            }
+                        ],
+                        "dom": 'RC<"top"iflp<"clear">>rt<"bottom"iflp<"clear">>',
+                        "deferRender": true,
+                        "processing": true,
+                        "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+                        "pageLength": 25,
+                        "pagingType": "simple_numbers",
+                        "language": {
+                            "emptyTable": "No survey data for this mitigation",
+                            "infoEmpty": "No data to show",
+                            "processing": "Loading table data",
+                            "zeroRecords": "No data matched the search string"
+                        },
+                        order: [[6, 'asc']]
+
+                }); 
+
+                new $.fn.dataTable.FixedHeader(table);                
+            } ); 
+        </script>
+    </head>
+    <body>
+        <div style="max-width: 70%; margin: 0 auto;">
+            <p style="text-align: left;"><img src=".\media\images\iad.png" alt="IAD logo" style="vertical-align: bottom;"><a href=".\main.html" style="font-size: 48px;">LOCKLEVEL</a></p>		
+            <div id="header"></div>
+            <table id="page_table" class="display nowrap dataTable">
+            </table>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,32 @@
+#NetworkMapperMT makefile
+cmake_minimum_required (VERSION 3.2)
+project(NetworkMapperMT)
+
+
+set(NETWORKMAPPERMT_PROJ_HOME "NetworkMapperMT")
+set(NETWORKMAPPERMT_DRIVER_PROJ_HOME "NetworkMapperMT_driver")
+
+
+if(${IS_32BIT_BUILD})
+	#targets
+	set(t_NetworkMapperMT "NetworkMapperMT")
+	set(t_NetworkMapperMT_driver "NetworkMapperMT_driver")
+	#end targets
+
+	add_library(${t_NetworkMapperMT} STATIC
+		"${NETWORKMAPPERMT_PROJ_HOME}/NetworkUtil.cpp" 
+		"${NETWORKMAPPERMT_PROJ_HOME}/NetworkMapperMgr.cpp")
+		
+
+		
+	add_plugin_executable(${t_NetworkMapperMT_driver} "${NETWORKMAPPERMT_DRIVER_PROJ_HOME}/main.cpp" "${PTH_PLUGIN_PAYLOAD_HOME}")
+
+	target_include_directories(${t_NetworkMapperMT_driver} PUBLIC "${NETWORKMAPPERMT_PROJ_HOME}")
+
+
+	target_link_libraries(${t_NetworkMapperMT_driver} ${t_NetworkMapperMT})
+
+	add_dependencies(${t_NetworkMapperMT_driver} ${t_NetworkMapperMT})
+
+endif()
+

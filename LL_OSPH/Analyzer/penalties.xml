@@ -1,0 +1,19 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<penalties>
+  <penalty id="NO_OS_PATCHES" name="No OS patches" value="100">
+    <reason>The operating system did not have any patches installed.</reason>
+    <remediation id="PATCH_OS">Patch the operating system with recent updates</remediation>
+  </penalty>
+  <penalty id="NO_OS_SECURITY_PATCHES" name="No OS security patches" value="100">
+    <reason>The operating system did not have any security patches installed.</reason>
+    <remediation id="SECURITY_PATCH_OS">Patch the operating system with recent security updates</remediation>
+  </penalty>
+  <penalty id="OLD_OS_SECURITY_PATCH_DATE" name="OS security patch date is too old" value="100">
+    <reason>The operating system's latest security patch install date ({0}) is {1} days old which is beyond the limit of {2} days</reason>
+    <remediation id="SECURITY_PATCH_OS">Patch the operating system with recent security updates</remediation>
+  </penalty>
+  <penalty id="OLD_OS_SECURITY_PATCH_AVERAGE_DAYS" name="The average number of days between security patch installation is too long" value="50">
+    <reason>The average days between installed security patches is {0} days which is beyond the limit of {1} days</reason>
+    <remediation id="SECURITY_PATCH_OS_REGULARLY">Patch the operating system with security updates within 30 days of patch release</remediation>
+  </penalty>
+</penalties>

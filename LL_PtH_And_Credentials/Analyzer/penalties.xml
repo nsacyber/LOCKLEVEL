@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<penalties>
+	<penalty id="UPGRADE_OS" name="Upgrade OS to newer than Windows XP" value="100">
+		<reason>Event Auditing is not available in Windows XP</reason>
+		<remediation id="UPGRADE_OS">Upgrade the operating system to be newer than Windows XP</remediation>
+	</penalty>
+	<penalty id="CONFIGURE_EVENT_LOG" name="Configure logon/logoff auditing" value="100">
+		<reason>Group Policy is not configured to audit user logon/logoff events</reason>
+		<remediation id="CONFIGURE_EVENT_LOG">Configure Group Policy to audit user logon/logoff events</remediation>
+	</penalty>
+	<penalty id="DOMAIN_ADMIN_LOGON_WORKSTATION" name="Domain Admin logon to workstation" value="10">
+		<reason>Domain Admin ({0}) logged into this workstation. This allows attackers to steal Domain Admin credentials for re-use on other systems</reason>
+		<remediation id="DOMAIN_ADMIN_LOGON_REMEDIATION_WORKSTATION">Do not use Domain Admin accounts on workstations</remediation>
+	</penalty>
+	<penalty id="DOMAIN_ADMIN_LOGON_SERVER" name="Domain Admin logon to member server" value="1">
+		<reason>Domain Admin ({0}) logged into this member server. This potentially allows attackers to steal Domain Admin credentials for re-use on other systems</reason>
+		<remediation id="DOMAIN_ADMIN_LOGON_REMEDIATION_SERVER">Do not use Domain Admin accounts on member servers</remediation>
+	</penalty>
+	<penalty id="BLOCK_W2W_TRAFFIC" name="Workstation to workstation communication allowed" value="10">
+		<reason>Workstation to Workstation Communication Allowed</reason>
+		<remediation id="BLOCK_W2W_TRAFFIC">Create firewall rule to block workstation to workstation traffic on port {0}</remediation>
+	</penalty>
+</penalties>

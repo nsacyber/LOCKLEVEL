@@ -1,0 +1,18 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AVFileReputationAnalyzer", "AVFileReputationAnalyzer.pyproj", "{CB4B3E0E-F5B6-447A-A485-48735FDF7604}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CB4B3E0E-F5B6-447A-A485-48735FDF7604}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CB4B3E0E-F5B6-447A-A485-48735FDF7604}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

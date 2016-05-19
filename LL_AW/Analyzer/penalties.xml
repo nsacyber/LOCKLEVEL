@@ -1,0 +1,83 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<penalties>
+  <penalty id="SRP_BINARIES_NONE" name="SRP binaries" value="100">
+    <reason>Software Restriction Policies scope is configured to apply to '{0}' rather than 'All Software Files'</reason>
+    <remediation id="CHANGE_SRP_BINARIES">Change SRP to apply to all executables and libraries</remediation>
+  </penalty>
+  <penalty id="SRP_BINARIES_EXE_ONLY" name="SRP binaries" value="75">
+    <reason>Software Restriction Policies scope is configured to apply to '{0}' rather than 'All Software Files'</reason>
+    <remediation id="CHANGE_SRP_BINARIES">Change SRP to apply to all executables and libraries</remediation>
+  </penalty>
+  <penalty id="SRP_SCOPE_USERS_ONLY" name="SRP scope" value="50">
+    <reason>The Software Restriction Policies scope is configured only for '{0}' rather than 'All Users'</reason>
+    <remediation id="CHANGE_SRP_SCOPE">Change SRP scope to apply to all users</remediation>
+  </penalty>
+  <penalty id="SRP_NO_PATH_RULES" name="No SRP path rules" value="25">
+    <reason>No Software Restriction Policies path rules were found</reason>
+    <remediation id="ADD_SRP_PATH_RULE">Add SRP path rules</remediation>
+  </penalty>
+  <penalty id="NO_WHITELISTING" name="No whitelisting found" value="100">
+    <reason>No supported whitelisting implementation was found</reason>
+    <remediation id="CONFIGURE_WHITELISTING">Implement a supported whitelisting technology</remediation>
+  </penalty>
+  <penalty id="APPLOCKER_BAD_PUBLISHER" name="Bad AppLocker publisher rule" value="50">
+    <reason>AppLocker rule named '{0}' from the '{1}' rule set must be removed due to allowing any signed application to run</reason>
+    <remediation id="REMOVE_APPLOCKER_RULE">Remove the AppLocker rule named '{0}' from the '{1}' rule set</remediation>
+  </penalty>
+  <penalty id="SRP_RULE_NOT_ENFORCED" name="SRP rule is not enforcing" value="50">
+    <reason>A Software Restriction Policies rules is in '{0}' mode rather than in enforcement mode</reason>
+    <remediation id="CONFIGURE_SRP_RULE_ENFORCEMENT">Configure the SRP rule to be enforced</remediation>
+  </penalty>
+  <penalty id="APPLOCKER_BLACKLIST_RULE_MISSING" name="AppLocker blacklist rule is missing" value="25">
+    <reason>The AppLocker rule named '{0}' from the '{1}' rule set is missing a required blacklist rule for '{2}'</reason>
+    <remediation id="ADD_APPLOCKER_BLACKLIST_RULE">Add a blacklist rule for '{0}' to the Applocker rule named '{1}' in the '{2}' rule set</remediation>
+  </penalty>
+  <penalty id="APPLOCKER_NO_USERPROFILE_RULES" name="AppLocker rule allows execution from user profile" value="100">
+    <reason>The AppLocker rule named '{0}' from the '{1}' rule set allows execution from user profiles</reason>
+    <remediation id="REMOVE_APPLOCKER_RULE">Remove the AppLocker rule named '{0}' from the '{1}' rule set</remediation>
+  </penalty>
+  <penalty id="SRP_WHITELIST_RULE_MISSING" name="SRP whitelist rule is missing" value="75">
+    <reason>A Software Restriction Policies whitelist rule for '{0}' is not configured </reason>
+    <remediation id="ADD_SRP_WHITELIST_RULE">Add a whitelist rule for '{0}' to SRP</remediation>
+  </penalty>
+  <penalty id="SRP_MISSING_EXE_TYPE" name="SRP missing executable type" value="25">
+    <reason>An executable type of '{0}' is not in the Software Restriction Policies Designated File Types list</reason>
+    <remediation id="ADD_SRP_EXE_TYPE">Add an executable type of '{0}' to the SRP Designated File Types list</remediation>
+  </penalty>
+  <penalty id="SRP_NO_BLACKLIST_RULES" name="No SRP blacklist rules" value="100">
+    <reason>No Software Restriction Policies blacklist rules were found</reason>
+    <remediation id="ADD_SRP_BLACKLIST_RULES">Add all required SRP blacklist rules</remediation>
+  </penalty>
+  <penalty id="SRP_BLACKLIST_RULE_MISSING" name="SRP blacklist rule is missing" value="25">
+    <reason>A Software Restriction Policies blacklist rule for '{0}' is not configured which may allow some users to bypass SRP</reason>
+    <remediation id="ADD_SRP_BLACKLIST_RULE">Add a blacklist rule for '{0}' to SRP</remediation>
+  </penalty>
+  <penalty id="APPLOCKER_NO_BLACKLIST_RULES" name="AppLocker rule set is missing all blacklist rules" value="100">
+    <reason>The AppLocker rule named '{0}' from the '{1}' rule set is missing all required blacklist rules</reason>
+    <remediation id="ADD_APPLOCKER_BLACKLIST_RULES">Add all blacklist rules to the Applocker rule named '{0}' in the '{1}' rule set</remediation>
+  </penalty>
+  <penalty id="APPLOCKER_RULESET_NOT_ENFORCED" name="AppLocker rule set is not enforced" value="100">
+    <reason>The AppLocker rule set '{0}' is set to Audit rather than Enforcement</reason>
+    <remediation id="ENFORCE_APPLOCKER_RULESET">Change the AppLocker rule set '{0}' to enforcement mode</remediation>
+  </penalty>
+  <penalty id="SRP_NOT_WHITELISTING" name="SRP is not whitelisting" value="100">
+    <reason>Software Restriction Policies configuration is in '{0}' mode rather than in whitelisting mode</reason>
+    <remediation id="CONFIGURE_SRP_WHITELISTING">Configure SRP to be in whitelisting mode</remediation>
+  </penalty>
+  <penalty id="SRP_NO_WHITELIST_RULES" name="No SRP whitelist rules" value="25">
+    <reason>No Software Restriction Policies whitelist rules were found</reason>
+    <remediation id="ADD_SRP_WHITELIST_RULES">Add SRP whitelist rules</remediation>
+  </penalty>
+  <penalty id="APPLOCKER_SERVICE_NOT_RUNNING" name="AppLocker service is not running" value="100">
+    <reason>The Application Identity service state is '{0}' rather than '{1}' so the system is not protected</reason>
+    <remediation id="START_APPLOCKER_SERVICE">Start the Application Identity service</remediation>
+  </penalty>
+  <penalty id="APPLOCKER_SERVICE_NOT_AUTOMATIC" name="AppLocker service is not automatically starting" value="100">
+    <reason>The Application Identity service start mode is set to '{0}' rather than '{1}' so the system is not protected at the next boot</reason>
+    <remediation id="SET_APPLOCKER_SERVICE_AUTO">Change the Application Identity service Startup Type to Automatic</remediation>
+  </penalty>
+  <penalty id="APPLOCKER_RULESET_NOT_CONFIGURED" name="AppLocker rule set is not configured" value="100">
+    <reason>The AppLocker rule set '{0}' is not configured</reason>
+    <remediation id="CONFIGURE_APPLOCKER_RULESET">Configure the AppLocker rule set '{0}'.</remediation>
+  </penalty>
+</penalties>
