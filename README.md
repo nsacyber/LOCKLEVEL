@@ -4,7 +4,7 @@ LOCKLEVEL was a rapidly built prototype that demonstrates a method for scoring h
 
 LOCKLEVEL was designed as standalone components that can be deployed using existing systems management tools. These independent components leverage Python/PowerShell scripts for analysis and C/C++ code for system surveys.
 
-[Splunk Assessment of Mitigation Implementations](https://github.com/iadgov/Splunk-Assessment-of-Mitigation-Implementations) (SAMI) is a production version of LOCKLEVEL that implements similar ideas and business logic. In some cases SAMI leverages specific LOCKLEVEL components.
+[Splunk Assessment of Mitigation Implementations](https://github.com/iadgov/Splunk-Assessment-of-Mitigation-Implementations) (SAMI) is a production version of LOCKLEVEL that implements similar ideas (SAMI does not implement an equivalent of the OSPH component from LOCKLEVEL) and similar [business logic](https://github.com/iadgov/Splunk-Assessment-of-Mitigation-Implementations/raw/master/SAMI_Business_Logic.xlsx). SAMI leverages specific LOCKLEVEL components, such as [anti-exploitation](./LL_AE/AntiExploitation/) (LL_AE) and [anti-virus](./LL_AV/GetAVStatus/) (LL_AV), by using them in the SAMI Technical Addon.
 
 ## IAD Top 10 Mitigations 
 LOCKLEVEL implements tests for 7 of the 10 mitigations.
