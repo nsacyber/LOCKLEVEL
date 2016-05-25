@@ -7,6 +7,6 @@ Copyright and Related Rights in the Work worldwide are waived through the [CC0 1
 
 LOCKLEVEL uses a number of libraries that are licensed under various licenses:
 
-* [GaugeJS](https://github.com/bernii/gauge.js) - MIT license
-* [DataTables](https://github.com/DataTables/DataTables) plugin for jQuery - MIT license 
-* [jQuery](https://github.com/jquery/jquery) - [jQuery license](https://github.com/jquery/jquery/blob/master/LICENSE.txt)
+* [GaugeJS](https://github.com/bernii/gauge.js) is licensed under the MIT license.
+* [DataTables plugin for jQuery](https://github.com/DataTables/DataTables) is licensed under the MIT license. 
+* [jQuery](https://github.com/jquery/jquery) is licensed under the [jQuery license](https://github.com/jquery/jquery/blob/master/LICENSE.txt).

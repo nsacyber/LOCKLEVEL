@@ -2,14 +2,14 @@
 
 LOCKLEVEL was a rapidly built prototype that demonstrates a method for scoring how well Windows systems have implemented some of the [NSA Information Assurance](https://www.iad.gov/) [top 10 mitigation strategies](https://www.iad.gov/iad/library/ia-guidance/iads-top-10-information-assurance-mitigation-strategies.cfm). This prototype is being shared to encourage industry adoption of these ideas into commercial tools.
 
-LOCKLEVEL was designed as standalone components that can be deployed using existing systems management tools. These independent components leverage Python/PowerShell scripts for analysis and C/C++ code for system surveys.
+LOCKLEVEL was designed as standalone components that can be deployed using existing systems management tools. These independent components leverage Python/PowerShell code for analysis and PowerShell/C/C++ code for system surveys.
 
 [Splunk Assessment of Mitigation Implementations](https://github.com/iadgov/Splunk-Assessment-of-Mitigation-Implementations) (SAMI) is a production version of LOCKLEVEL that implements similar ideas (SAMI does not implement an equivalent of the OSPH component from LOCKLEVEL) and similar [business logic](https://github.com/iadgov/Splunk-Assessment-of-Mitigation-Implementations/raw/master/SAMI_Business_Logic.xlsx). SAMI leverages specific LOCKLEVEL components, such as [anti-exploitation](./LL_AE/AntiExploitation/) (LL_AE) and [anti-virus](./LL_AV/GetAVStatus/) (LL_AV), by using them in the SAMI Technical Addon.
 
 ## IAD Top 10 Mitigations 
 LOCKLEVEL implements tests for 7 of the 10 mitigations.
 
-1. **Application Whitelisting** - The LL_AW component implement tests for application whitelisting when implemented with Microsoft's Software Restriction Policies or AppLocker.
+1. **Application Whitelisting** - The LL_AW component implements tests for application whitelisting when implemented with Microsoft's Software Restriction Policies or AppLocker.
 1. **Control Administrative Privileges** - The LL_PtH_And_Credentials component implements tests for auditing high privileged account use across systems.
 1. **Limit Workstation to Workstation Communication** - The LL_PtH_And_Credentials component implements tests for testing workstation to workstation communication.
 1. **Use Anti-Virus File Reputation Services** - The LL_AV component implements tests for AV software, including file reputation services, when implemented with McAfee Virus Scan Enterprise.
