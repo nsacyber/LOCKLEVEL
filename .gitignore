@@ -12,4 +12,6 @@
 *.sdf
 *.opensdf
 *.suo
+*.db
+*.opendb
 presentation/score*.js
